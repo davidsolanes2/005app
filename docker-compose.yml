@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+    - "8000:8000"
+    volumes:
+    - ./app:/app
+    command: >
+      sh -c "python manage.py wait_for_db &&
+             python manage.py migrate && 
+             python manage.py runserver 0.0.0.0:8000"
+    # environment:
+    #   - DB_HOST=db
+    #   - DB_NAME=app
+    #   - DB_USER=mysql
+    #   - DB_PASS=mysql
+    depends_on:
+      - db
+  db:
+    image: 'mysql:8.0'
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_DB=course
+      - MYSQL_USER=david
+      - MYSQL_ROOT_PASSWORD=mysql001
+    volumes:
+      -mysql-data:/var/lib/mysql
+volumes:
+  mysql-data:
