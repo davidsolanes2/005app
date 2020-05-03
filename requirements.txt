@@ -1,6 +1,5 @@
 Django==3.0
 djangorestframework==3.11.0
 
-mysql-connector
-
+PyMySQL==0.7.2
 flake8>=3.7.0,<3.7.9
